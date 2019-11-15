@@ -13,7 +13,7 @@ import javax.inject.Inject
 class BrandServiceImpl : BrandService {
 
     @Inject
-    private lateinit var brandRepository: BrandRepository
+    internal lateinit var brandRepository: BrandRepository
 
     override fun list(): List<BrandResDto>? {
         return brandRepository.list().map { brandEntity -> brandEntity.transformToBrandResDto() }

@@ -36,7 +36,7 @@ class ServiceExceptionHandler : ExceptionMapper<Exception> {
 
         errorDetail = when (exception) {
             is EntityNotFoundException -> {
-                ErrorDetail((exception as EntityNotFoundException)!!.code ?: ErrorCode.SYSTEM_ERROR, ErrorType.SYSTEM_ERROR, null, exception.message, "")
+                ErrorDetail((exception as EntityNotFoundException).code ?: ErrorCode.SYSTEM_ERROR, ErrorType.SYSTEM_ERROR, null, exception.message, "")
             }
             else -> {
                 ErrorDetail(ErrorCode.SYSTEM_ERROR, ErrorType.SYSTEM_ERROR, null, null, "")
@@ -45,7 +45,21 @@ class ServiceExceptionHandler : ExceptionMapper<Exception> {
 
         errorDetails.add(errorDetail)
         error.errors = errorDetails
-        LOG.info("Request {} {} {} {}: {}", info.path, request.headers(), request.params(), request.query(), Json.encode(error))
+        LOG.info("""
+            
+            ---- ERROR REQUEST ----
+            -- Request path:
+            ${request.absoluteURI()}
+            -- Request method: ${request.method()}
+            -- Request headers:
+            ${request.headers()}
+            -- Request params:
+            ${request.params()}
+            -- Query string:
+            ${request.query()}
+            -- Error response:
+            ${Json.encode(error)}
+        """.trimIndent())
         return Response.status(Response.Status.BAD_REQUEST).entity(error).build();
     }
 }

@@ -6,6 +6,7 @@ import io.quarkus.runtime.configuration.ProfileManager
 import org.eclipse.microprofile.config.inject.ConfigProperty
 import org.slf4j.LoggerFactory
 import java.util.*
+import javax.annotation.PostConstruct
 import javax.enterprise.context.ApplicationScoped
 import javax.enterprise.event.Observes
 
@@ -18,9 +19,14 @@ class ApplicationLifecycle {
     @ConfigProperty(name = "server.timezone")
     lateinit var timeZone: String
 
+    @PostConstruct
+    fun init() {
+        LOG.info("Setting service timezone")
+        TimeZone.setDefault(TimeZone.getTimeZone(timeZone))
+    }
+
     fun onStart(@Observes ev: StartupEvent) {
         LOG.info("The application is starting with ${ProfileManager.getActiveProfile()} profile")
-        TimeZone.setDefault(TimeZone.getTimeZone(timeZone));
     }
 
     fun onStop(@Observes ev: ShutdownEvent) {

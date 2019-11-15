@@ -1,7 +1,7 @@
 package com.ngockhuong.exception
 
 class EntityNotFoundException : ServiceException {
-    lateinit var code: String
+    var code: String? = null
 
     constructor(message: String?) : super(message)
 

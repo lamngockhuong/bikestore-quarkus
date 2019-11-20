@@ -10,8 +10,8 @@ import javax.ws.rs.*
 import javax.ws.rs.core.MediaType
 
 @Path("/brands")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_FORM_URLENCODED)
+@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 class BrandResource {
 
     @Inject
@@ -20,8 +20,8 @@ class BrandResource {
     @GET
     @Operation(summary = "Get brand list")
     @APIResponse(
-        responseCode = "200",
-        description = "The brand list"
+            responseCode = "200",
+            description = "The brand list"
     )
     fun getBrands(): List<BrandResDto> {
         return brandService.list()!!

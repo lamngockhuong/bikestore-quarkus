@@ -2,10 +2,11 @@ package com.ngockhuong.model.entity
 
 import com.ngockhuong.model.dto.res.CategoryResDto
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase
+import java.time.LocalDateTime
 import javax.persistence.*
 
-//@Entity
-//@Table(name = "categories")
+@Entity
+@Table(name = "categories")
 class CategoryEntity : PanacheEntityBase() {
 
     @Id
@@ -14,15 +15,18 @@ class CategoryEntity : PanacheEntityBase() {
 
     lateinit var categoryName: String
 
+
     fun findByCategoryName(categoryName: String): CategoryEntity? {
-//        return find<Category>("category_name", categoryName).firstResult()
         return null;
     }
 
     fun findAll(): List<CategoryEntity>? {
-//        return findAll<Category>().list<Category>()
         return null;
     }
+
+    @Column(name = "created_date")
+    var createdDate: LocalDateTime = LocalDateTime.now()
+
 
     fun transformToCategoryResDto(): CategoryResDto {
         var item = CategoryResDto()

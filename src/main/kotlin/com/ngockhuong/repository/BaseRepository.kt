@@ -1,15 +1,15 @@
 package com.ngockhuong.repository
 
-import com.ngockhuong.model.entity.BrandEntity
-
 interface BaseRepository<T> {
     fun list(): List<T>
 
-    fun findItemById(id: Long): BrandEntity?
+    fun findItemById(id: Long): T?
 
-    fun create(item: T): BrandEntity
+    fun create(item: T): T
 
-    fun update(item: T): BrandEntity
+    fun update(item: T): T
 
     fun delete(id: Long)
+
+    fun remove(item: T)
 }

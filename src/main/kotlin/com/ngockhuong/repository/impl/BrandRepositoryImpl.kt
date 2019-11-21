@@ -1,6 +1,5 @@
 package com.ngockhuong.repository.impl
 
-import com.ngockhuong.exception.EntityNotFoundException
 import com.ngockhuong.model.entity.BrandEntity
 import com.ngockhuong.repository.BrandRepository
 import io.quarkus.hibernate.orm.panache.PanacheRepository
@@ -22,12 +21,15 @@ class BrandRepositoryImpl : BrandRepository, PanacheRepository<BrandEntity> {
     }
 
     override fun update(item: BrandEntity): BrandEntity {
-        persistAndFlush(item)
+        // TODO()
         return item
     }
 
     override fun delete(id: Long) {
-        val item: BrandEntity? = findItemById(id) ?: throw EntityNotFoundException("Không tìm thấy")
+        delete(findItemById(id))
+    }
+
+    override fun remove(item: BrandEntity) {
         delete(item)
     }
 }

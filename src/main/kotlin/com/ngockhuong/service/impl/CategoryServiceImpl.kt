@@ -10,7 +10,11 @@ class CategoryServiceImpl : CategoryService {
         return CategoryEntity().findAll()?.map { categoryEntity -> categoryEntity.transformToCategoryResDto() }
     }
 
-    override fun findById(id: Long): CategoryResDto {
+    override fun findById(id: Long): CategoryEntity {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun get(id: Long): CategoryResDto {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
@@ -25,4 +29,5 @@ class CategoryServiceImpl : CategoryService {
     override fun delete(id: Long) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
 }

@@ -6,6 +6,10 @@ import java.time.LocalDateTime
 import javax.json.bind.annotation.JsonbProperty
 
 class BrandResDto : BrandDto() {
+    @Schema(name = "brand_id")
+    @JsonbProperty("brand_id")
+    var brandId: Long = 0
+
     @Schema(name = "created_at")
     @JsonbProperty("created_at")
     lateinit var createdAt: LocalDateTime

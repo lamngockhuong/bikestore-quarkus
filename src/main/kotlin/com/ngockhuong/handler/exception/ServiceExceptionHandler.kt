@@ -12,6 +12,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty
 import org.slf4j.LoggerFactory
 import java.io.PrintWriter
 import java.io.StringWriter
+import javax.persistence.PersistenceException
 import javax.ws.rs.core.Context
 import javax.ws.rs.core.Response
 import javax.ws.rs.core.UriInfo
@@ -39,13 +40,20 @@ class ServiceExceptionHandler : ExceptionMapper<Exception> {
 
         val errorDetails = mutableListOf<ErrorDetail?>()
         var errorDetail: ErrorDetail? = null
+        var httpStatus: Response.Status
 
-        errorDetail = when (exception) {
+        when (exception) {
             is EntityNotFoundException -> {
-                ErrorDetail((exception as EntityNotFoundException).code ?: ErrorCode.SYSTEM_ERROR, ErrorType.SYSTEM_ERROR, null, exception.message, getServerMessage(exception!!))
+                httpStatus = Response.Status.NOT_FOUND
+                errorDetail = ErrorDetail(exception.code ?: ErrorCode.SYSTEM_ERROR, ErrorType.SYSTEM_ERROR, null, exception.message, getServerMessage(exception))
+            }
+            is PersistenceException -> {
+                httpStatus = Response.Status.INTERNAL_SERVER_ERROR
+                errorDetail = ErrorDetail(ErrorCode.DATA_ERROR, ErrorType.SYSTEM_ERROR, null, null, getServerMessage(exception))
             }
             else -> {
-                ErrorDetail(ErrorCode.SYSTEM_ERROR, ErrorType.SYSTEM_ERROR, null, null, getServerMessage(exception!!))
+                httpStatus = Response.Status.INTERNAL_SERVER_ERROR
+                errorDetail = ErrorDetail(ErrorCode.SYSTEM_ERROR, ErrorType.SYSTEM_ERROR, null, null, getServerMessage(exception!!))
             }
         }
 
@@ -66,10 +74,10 @@ class ServiceExceptionHandler : ExceptionMapper<Exception> {
             -- Error response:
             ${Json.encode(error)}
         """.trimIndent())
-        return Response.status(Response.Status.BAD_REQUEST).entity(error).build();
+        return Response.status(httpStatus).entity(error).build();
     }
 
-    fun getServerMessage(ex: Exception): String {
+    private fun getServerMessage(ex: Exception): String {
         var result = ""
         if (debug) {
             val sw = StringWriter()

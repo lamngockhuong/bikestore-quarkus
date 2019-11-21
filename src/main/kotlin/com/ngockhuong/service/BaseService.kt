@@ -1,13 +1,15 @@
 package com.ngockhuong.service
 
-interface BaseService<E, T> {
-    fun list(): List<T>?
+interface BaseService<E, R, T> {
+    fun list(): List<R>?
 
     fun findById(id: Long): T
 
-    fun create(item: E): T
+    fun get(id: Long): R
 
-    fun update(item: E): T
+    fun create(item: E): R
+
+    fun update(item: E): R
 
     fun delete(id: Long)
 }

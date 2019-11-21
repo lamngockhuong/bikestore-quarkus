@@ -28,13 +28,26 @@ class BrandResource {
     }
 
     @POST
-    fun getBrand(brand: BrandReqDto): BrandResDto {
+    fun createBrand(brand: BrandReqDto): BrandResDto {
         return brandService.create(brand)
+    }
+
+    @PUT
+    @Path("/{id}")
+    fun updateBrand(brand: BrandReqDto): BrandResDto {
+        return brandService.update(brand)
+    }
+
+    @DELETE
+    @Path("/{id}")
+    fun deleteBrand(@PathParam("id") id: Long) {
+        brandService.findById(id)
+        brandService.delete(id)
     }
 
     @GET
     @Path("/{id}")
     fun getBrand(@PathParam("id") id: Long): BrandResDto {
-        return brandService.findById(id)
+        return brandService.get(id)
     }
 }

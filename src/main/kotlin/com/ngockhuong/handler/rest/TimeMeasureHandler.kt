@@ -44,7 +44,7 @@ class TimeMeasureHandler : ContainerRequestFilter, ContainerResponseFilter {
 
     override fun filter(context: ContainerRequestContext?) {
         LOG.info("Request [{}] {} at time: {}", context!!.method, info.path, timer.start())
-        LOG.info("Body : {}", IOUtils.toString(context.entityStream, Charsets.UTF_8))
+//        LOG.info("Body : {}", IOUtils.toString(context.entityStream, Charsets.UTF_8))
     }
 
     override fun filter(reqContext: ContainerRequestContext?, resContext: ContainerResponseContext?) {

@@ -11,5 +11,5 @@ interface BaseRepository<T> {
 
     fun update(item: T): BrandEntity
 
-    fun delete(id: Int)
+    fun delete(id: Long)
 }

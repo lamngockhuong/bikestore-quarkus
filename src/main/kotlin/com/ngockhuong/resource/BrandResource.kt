@@ -1,5 +1,6 @@
 package com.ngockhuong.resource
 
+import com.ngockhuong.model.dto.req.BrandReqDto
 import com.ngockhuong.model.dto.res.BrandResDto
 import com.ngockhuong.service.BrandService
 import org.eclipse.microprofile.openapi.annotations.Operation
@@ -24,6 +25,11 @@ class BrandResource {
     )
     fun getBrands(): List<BrandResDto> {
         return brandService.list()!!
+    }
+
+    @POST
+    fun getBrand(brand: BrandReqDto): BrandResDto {
+        return brandService.create(brand)
     }
 
     @GET

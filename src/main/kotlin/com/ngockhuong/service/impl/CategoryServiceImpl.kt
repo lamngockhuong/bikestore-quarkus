@@ -22,7 +22,7 @@ class CategoryServiceImpl : CategoryService {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun delete(id: Int) {
+    override fun delete(id: Long) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

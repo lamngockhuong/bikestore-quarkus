@@ -6,6 +6,7 @@ import com.ngockhuong.model.dto.res.BrandResDto
 import com.ngockhuong.model.entity.BrandEntity
 import com.ngockhuong.repository.BrandRepository
 import com.ngockhuong.service.BrandService
+import com.ngockhuong.util.toBrandResDto
 import javax.enterprise.context.ApplicationScoped
 import javax.inject.Inject
 
@@ -26,14 +27,14 @@ class BrandServiceImpl : BrandService {
     }
 
     override fun create(item: BrandReqDto): BrandResDto {
-        return BrandResDto()
+        return brandRepository.create(BrandEntity()).transformToBrandResDto()
     }
 
     override fun update(item: BrandReqDto): BrandResDto {
         return BrandResDto()
     }
 
-    override fun delete(id: Int) {
-
+    override fun delete(id: Long) {
+        brandRepository.delete(id)
     }
 }

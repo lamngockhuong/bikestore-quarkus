@@ -9,5 +9,5 @@ interface BaseService<E, T> {
 
     fun update(item: E): T
 
-    fun delete(id: Int)
+    fun delete(id: Long)
 }

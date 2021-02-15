@@ -3,6 +3,10 @@ package com.ngockhuong.handler.rest
 import io.vertx.core.http.HttpServerRequest
 import org.apache.commons.io.IOUtils
 import org.slf4j.LoggerFactory
+import java.io.BufferedInputStream
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import java.io.InputStream
 import javax.ws.rs.container.ContainerRequestContext
 import javax.ws.rs.container.ContainerRequestFilter
 import javax.ws.rs.container.ContainerResponseContext
@@ -44,11 +48,10 @@ class TimeMeasureHandler : ContainerRequestFilter, ContainerResponseFilter {
 
     override fun filter(context: ContainerRequestContext?) {
         LOG.info("Request [{}] {} at time: {}", context!!.method, info.path, timer.start())
-//        LOG.info("Body : {}", IOUtils.toString(context.entityStream, Charsets.UTF_8))
+        // LOG.info("Body : {}", IOUtils.toString(BufferedInputStream(context.entityStream, 100000), Charsets.UTF_8))
     }
 
     override fun filter(reqContext: ContainerRequestContext?, resContext: ContainerResponseContext?) {
         LOG.info("Total request execution time for [{}] {} : {} milliseconds", reqContext!!.method, info.path, timer.stop())
     }
-
 }
